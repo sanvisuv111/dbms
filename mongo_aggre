@@ -1,0 +1,62 @@
+ASSIGNMENT NO:10
+/*PROBLEM STATEMENT:MongoDB – Aggregation and Indexing: Design and Develop
+MongoDB Queries using aggregation and indexing with suitable example using MongoDB*/
+gescoe@gescoe-OptiPlex-3010:~$ mongo
+MongoDB shell version: 2.6.12
+connecting to: test
+> use TEB_41;
+switched to db TEB_41
+> db.Student.insert({"Rollno":4,"Name":"Gauri","Branch":"Computer","Marks":85});
+WriteResult({ "nInserted" : 1 })
+> db.Student.find().pretty();
+{
+"_id" : ObjectId("66c5c039f69f7a64bf57360b"),
+"Rollno" : 1,
+"Name" : "Saee",
+"Branch" : "Computer",
+"Marks" : 95
+}
+{
+"_id" : ObjectId("66c5c05af69f7a64bf57360c"),
+"Rollno" : 2,
+"Name" : "Sayali",
+"Branch" : "IT",
+"Marks" : 75
+}
+{
+"_id" : ObjectId("66c5c0a1f69f7a64bf57360e"),
+"Branch" : "AIDS",
+"Marks" : 80
+}
+{
+"_id" : ObjectId("66c5cab76de7af48add9b83b"),
+"Rollno" : 4,
+"Name" : "Gauri",
+"Branch" : "Computer",
+"Marks" : 85
+}
+> db.Student.aggregate([{$group:{_id:"$Branch",Total_marks:{$sum:"$Marks"}}}]);
+{ "_id" : "AIDS", "Total_marks" : 80 }
+{ "_id" : "IT", "Total_marks" : 75 }
+{ "_id" : "Computer", "Total_marks" : 180 }
+> db.Student.aggregate([{$group:{_id:"$Branch",Maximum_marks:{$max:"$Marks"}}}]);
+{ "_id" : "AIDS", "Maximum_marks" : 80 }
+{ "_id" : "IT", "Maximum_marks" : 75 }
+{ "_id" : "Computer", "Maximum_marks" : 95 }
+> db.Student.aggregate([{$group:{_id:"$Branch",Minimum_marks:{$min:"$Marks"}}}]);
+{ "_id" : "AIDS", "Minimum_marks" : 80 }
+{ "_id" : "IT", "Minimum_marks" : 75 }
+{ "_id" : "Computer", "Minimum_marks" : 85 }
+> db.Student.aggregate([{$group:{_id:"$Branch",Average_marks:{$avg:"$Marks"}}}]);
+{ "_id" : "AIDS", "Average_marks" : 80 }
+{ "_id" : "IT", "Average_marks" : 75 }
+{ "_id" : "Computer", "Average_marks" : 90 }
+> db.Student.aggregate([{$group:{_id:"$Branch",First_marks:{$first:"$Marks"}}}]);
+{ "_id" : "AIDS", "First_marks" : 80 }
+{ "_id" : "IT", "First_marks" : 75 }
+{ "_id" : "Computer", "First_marks" : 95 }
+> db.Student.aggregate([{$group:{_id:"$Branch",Last_marks:{$last:"$Marks"}}}]);
+{ "_id" : "AIDS", "Last_marks" : 80 }
+{ "_id" : "IT", "Last_marks" : 75 }
+{ "_id" : "Computer", "Last_marks" : 85 }
+>
