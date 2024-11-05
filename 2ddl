@@ -1,177 +1,330 @@
-gescoe@gescoe-OptiPlex-3010:~$ mysql -h 192.168.2.232 -u TEB41 -p
-Enter password:
-Welcome to the MySQL monitor. Commands end with ; or \g.
-Your MySQL connection id is 62
-Server version: 5.6.41 MySQL Community Server (GPL)
-Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 9.1.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
 Oracle is a registered trademark of Oracle Corporation and/or its
 affiliates. Other names may be trademarks of their respective
 owners.
+
 Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
-mysql> create database AS_1;
-Query OK, 1 row affected (0.00 sec)
-mysql> use AS_1;
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sanvi              |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.04 sec)
+
+mysql> create database sanvi1211;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use sanvi1211;
 Database changed
-mysql> create table customer(accno int primary key,name varchar(15),balance numeric(10),city
-varchar(15));
-Query OK, 0 rows affected (0.33 sec)
+mysql> create table customer(accno int primary key, name varchar(15), balance numeric(10),city varchar(15));
+Query OK, 0 rows affected (0.04 sec)
+
 mysql> desc customer;
 +---------+---------------+------+-----+---------+-------+
-| Field | Type | Null | Key | Default | Extra |
+| Field   | Type          | Null | Key | Default | Extra |
 +---------+---------------+------+-----+---------+-------+
-| accno | int(11) | NO | PRI | NULL | |
-| name | varchar(15) | YES | | NULL | |
-| balance | decimal(10,0) | YES | | NULL | |
-| city | varchar(15) | YES | | NULL | |
+| accno   | int           | NO   | PRI | NULL    |       |
+| name    | varchar(15)   | YES  |     | NULL    |       |
+| balance | decimal(10,0) | YES  |     | NULL    |       |
+| city    | varchar(15)   | YES  |     | NULL    |       |
 +---------+---------------+------+-----+---------+-------+
-4 rows in set (0.00 sec)
-mysql> insert into customer
-values(1,'Ram',10000,'Pune'),(2,'Ravi',25000,'Nashik'),(3,'Sachin',30000,'Mumbai');Query OK, 3
-rows affected (0.06 sec)
-Records: 3 Duplicates: 0 Warnings: 0
+4 rows in set (0.02 sec)
+
+mysql> insert into customer values(1,"Ram",10000,"Nashik");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into customer values(2,"Sachin",20000,"Pune");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into customer values(3,"Ravi",45000,"Mumbai");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into customer values(4,"Sanvi",64000,"Nashik");
+Query OK, 1 row affected (0.01 sec)
+
+mysql>
+mysql> insert into customer values(5,"Devika",24000,"Pune");
+Query OK, 1 row affected (0.01 sec)
+
 mysql> select * from customer;
 +-------+--------+---------+--------+
-| accno | name | balance | city |
+| accno | name   | balance | city   |
 +-------+--------+---------+--------+
-| 1 | Ram | 10000 | Pune |
-| 2 | Ravi | 25000 | Nashik |
-| 3 | Sachin | 30000 | Mumbai |
+|     1 | Ram    |   10000 | Nashik |
+|     2 | Sachin |   20000 | Pune   |
+|     3 | Ravi   |   45000 | Mumbai |
+|     4 | Sanvi  |   64000 | Nashik |
+|     5 | Devika |   24000 | Pune   |
 +-------+--------+---------+--------+
-3 rows in set (0.00 sec)
-mysql> create table loan(loanno int primary key,name varchar(15),loanamt numeric(10));
-Query OK, 0 rows affected (0.29 sec)
-mysql> desc loan;
-+---------+---------------+------+-----+---------+-------+
-| Field | Type | Null | Key | Default | Extra |
-+---------+---------------+------+-----+---------+-------+
-| loanno | int(11) | NO | PRI | NULL | |
-| name | varchar(15) | YES | | NULL | |
-| loanamt | decimal(10,0) | YES | | NULL | |
-+---------+---------------+------+-----+---------+-------+
-3 rows in set (0.01 sec)
-mysql> insert into loan values(1,'Ram',10000),(2,'Ravi',50000),(4,'dipak',40000);
-Query OK, 3 rows affected (0.05 sec)
-Records: 3 Duplicates: 0 Warnings: 0
+5 rows in set (0.00 sec)
+
+mysql> create table loan(loan_no int primary key, name varchar(15), loan_amt numeric(10));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into loan values(1,"Ram",650000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into loan values(2,"Sachin",99000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into loan values(5,"Devika",87000);
+Query OK, 1 row affected (0.01 sec)
+
 mysql> select * from loan;
-+--------+-------+---------+
-| loanno | name | loanamt |
-+--------+-------+---------+
-| 1 | Ram | 10000 |
-| 2 | Ravi | 50000 |
-| 4 | dipak | 40000 |
-+--------+-------+---------+
++---------+--------+----------+
+| loan_no | name   | loan_amt |
++---------+--------+----------+
+|       1 | Ram    |   650000 |
+|       2 | Sachin |    99000 |
+|       5 | Devika |    87000 |
++---------+--------+----------+
 3 rows in set (0.00 sec)
-mysql> (select name from customer) union (select name from loan); --having
-account and loan
+
+mysql> (select name from customer)union (select name from loan);
 +--------+
-| name |
+| name   |
 +--------+
-| Ram |
-| Ravi |
+| Ram    |
 | Sachin |
-| dipak |
+| Ravi   |
+| Sanvi  |
+| Devika |
 +--------+
+5 rows in set (0.01 sec)
+
+mysql> select name from customer where name in (select name from loan);
++--------+
+| name   |
++--------+
+| Ram    |
+| Sachin |
+| Devika |
++--------+
+3 rows in set (0.01 sec)
+
+mysql> select name from customer where name not in (select name from loan);
++-------+
+| name  |
++-------+
+| Ravi  |
+| Sanvi |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> create view myview1 as select * from customer where balance >=20000;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from myview1;
++-------+--------+---------+--------+
+| accno | name   | balance | city   |
++-------+--------+---------+--------+
+|     2 | Sachin |   20000 | Pune   |
+|     3 | Ravi   |   45000 | Mumbai |
+|     4 | Sanvi  |   64000 | Nashik |
+|     5 | Devika |   24000 | Pune   |
++-------+--------+---------+--------+
 4 rows in set (0.00 sec)
-mysql> select name from customer where name in(select name from loan);
-+------+
-| name |
-+------+
-| Ram |
-| Ravi |
-+------+
+
+mysql> create view myview2 as select * from customer where balance >=20000 and city="Pune";
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from myview2;
++-------+--------+---------+------+
+| accno | name   | balance | city |
++-------+--------+---------+------+
+|     2 | Sachin |   20000 | Pune |
+|     5 | Devika |   24000 | Pune |
++-------+--------+---------+------+
 2 rows in set (0.00 sec)
-mysql> select name from customer where name not in(select name from loan);
-+--------+
-| name |
-+--------+
-| Sachin |
-+--------+
-1 row in set (0.00 sec)
-mysql> select name from loan where name not in(select name from customer);
-+-------+
-| name |
-+-------+
-| dipak |
-+-------+
-1 row in set (0.00 sec)
-mysql> select * from customer where balance>20000;
+
+mysql> alter table customer rename to customer111;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select *  from customer111;
 +-------+--------+---------+--------+
-| accno | name | balance | city |
+| accno | name   | balance | city   |
 +-------+--------+---------+--------+
-| 2 | Ravi | 25000 | Nashik |
-| 3 | Sachin | 30000 | Mumbai |
+|     1 | Ram    |   10000 | Nashik |
+|     2 | Sachin |   20000 | Pune   |
+|     3 | Ravi   |   45000 | Mumbai |
+|     4 | Sanvi  |   64000 | Nashik |
+|     5 | Devika |   24000 | Pune   |
 +-------+--------+---------+--------+
-2 rows in set (0.00 sec)
-mysql> select * from customer where balance>20000 and city='Nashik';
-+-------+------+---------+--------+
-| accno | name | balance | city |
-+-------+------+---------+--------+
-| 2 | Ravi | 25000 | Nashik |
-+-------+------+---------+--------+
-1 row in set (0.00 sec)
+5 rows in set (0.00 sec)
+
+mysql> update customer set city="Mumbai" where name="Ram";
+ERROR 1146 (42S02): Table 'sanvi1211.customer' doesn't exist
+mysql> update customer111 set city="Mumbai" where name="Ram";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *  from customer111;
++-------+--------+---------+--------+
+| accno | name   | balance | city   |
++-------+--------+---------+--------+
+|     1 | Ram    |   10000 | Mumbai |
+|     2 | Sachin |   20000 | Pune   |
+|     3 | Ravi   |   45000 | Mumbai |
+|     4 | Sanvi  |   64000 | Nashik |
+|     5 | Devika |   24000 | Pune   |
++-------+--------+---------+--------+
+5 rows in set (0.00 sec)
+
+mysql> delete from customer where accno=5;
+ERROR 1146 (42S02): Table 'sanvi1211.customer' doesn't exist
+mysql> delete from customer111 where accno=5;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> alter table customer111 rename to customer;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from customer;
++-------+--------+---------+--------+
+| accno | name   | balance | city   |
++-------+--------+---------+--------+
+|     1 | Ram    |   10000 | Mumbai |
+|     2 | Sachin |   20000 | Pune   |
+|     3 | Ravi   |   45000 | Mumbai |
+|     4 | Sanvi  |   64000 | Nashik |
++-------+--------+---------+--------+
+4 rows in set (0.00 sec)
+
 mysql> create index myindex on customer(name);
-Query OK, 0 rows affected (0.27 sec)
-Records: 0 Duplicates: 0 Warnings: 0
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
 mysql> show indexes from customer;
-+----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------
-+------+------------+---------+---------------+
-| Table | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality |
-Sub_part | Packed | Null | Index_type | Comment | Index_comment |
-+----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------
-+------+------------+---------+---------------+
-| customer | 0 | PRIMARY | 1 | accno | A | 3 | NULL |
-NULL | | BTREE | | |
-| customer | 1 | myindex | 1 | name | A | 3 | NULL |
-NULL | YES | BTREE | | |
-+----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------
-+------+------------+---------+---------------+
-2 rows in set (0.00 sec)
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table    | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| customer |          0 | PRIMARY  |            1 | accno       | A         |           4 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| customer |          1 | myindex  |            1 | name        | A         |           4 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++----------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+2 rows in set (0.01 sec)
+
 mysql> create index dataindex on customer(accno,name);
-Query OK, 0 rows affected (0.28 sec)
-Records: 0 Duplicates: 0 Warnings: 0
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
 mysql> show indexes from customer;
-+----------+------------+-----------+--------------+-------------+-----------+-------------+----------+-------
--+------+------------+---------+---------------+
-| Table | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality |
-Sub_part | Packed | Null | Index_type | Comment | Index_comment |
-+----------+------------+-----------+--------------+-------------+-----------+-------------+----------+-------
--+------+------------+---------+---------------+
-| customer | 0 | PRIMARY | 1 | accno | A | 3 | NULL |
-NULL | | BTREE | | |
-| customer | 1 | myindex | 1 | name | A | 3 | NULL |
-NULL | YES | BTREE | | |
-| customer | 1 | dataindex | 1 | accno | A | 3 | NULL |
-NULL | | BTREE | | |
-| customer | 1 | dataindex | 2 | name | A | 3 | NULL |
-NULL | YES | BTREE | | |
-+----------+------------+-----------+--------------+-------------+-----------+-------------+----------+-------
--+------+------------+---------+---------------+
-4 rows in set (0.00 sec)
++----------+------------+-----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table    | Non_unique | Key_name  | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++----------+------------+-----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| customer |          0 | PRIMARY   |            1 | accno       | A         |           4 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| customer |          1 | myindex   |            1 | name        | A         |           4 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
+| customer |          1 | dataindex |            1 | accno       | A         |           4 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| customer |          1 | dataindex |            2 | name        | A         |           4 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++----------+------------+-----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+4 rows in set (0.01 sec)
+
 mysql> select * from customer order by balance asc;
 +-------+--------+---------+--------+
-| accno | name | balance | city |
+| accno | name   | balance | city   |
 +-------+--------+---------+--------+
-| 1 | Ram | 10000 | Pune |
-| 2 | Ravi | 25000 | Nashik |
-| 3 | Sachin | 30000 | Mumbai |
+|     1 | Ram    |   10000 | Mumbai |
+|     2 | Sachin |   20000 | Pune   |
+|     3 | Ravi   |   45000 | Mumbai |
+|     4 | Sanvi  |   64000 | Nashik |
 +-------+--------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from customer order by balance dsc;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'dsc' at line 1
+mysql> select * from customer order by balance desc;
++-------+--------+---------+--------+
+| accno | name   | balance | city   |
++-------+--------+---------+--------+
+|     4 | Sanvi  |   64000 | Nashik |
+|     3 | Ravi   |   45000 | Mumbai |
+|     2 | Sachin |   20000 | Pune   |
+|     1 | Ram    |   10000 | Mumbai |
++-------+--------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select name,loan_amt,loan_amt*0.4*20 as interest from loan;
++--------+----------+-----------+
+| name   | loan_amt | interest  |
++--------+----------+-----------+
+| Ram    |   650000 | 5200000.0 |
+| Sachin |    99000 |  792000.0 |
+| Devika |    87000 |  696000.0 |
++--------+----------+-----------+
+3 rows in set (0.01 sec)
+
+mysql> select * from loan order by loan_amt desc;
++---------+--------+----------+
+| loan_no | name   | loan_amt |
++---------+--------+----------+
+|       1 | Ram    |   650000 |
+|       2 | Sachin |    99000 |
+|       5 | Devika |    87000 |
++---------+--------+----------+
 3 rows in set (0.00 sec)
-mysql> select * from loan order by loanamt desc;
-+--------+-------+---------+
-| loanno | name | loanamt |
-+--------+-------+---------+
-| 2 | Ravi | 50000 |
-| 4 | dipak | 40000 |
-| 1 | Ram | 10000 |
-+--------+-------+---------+
+
+mysql> select * from loan order by loan_amt asc;
++---------+--------+----------+
+| loan_no | name   | loan_amt |
++---------+--------+----------+
+|       5 | Devika |    87000 |
+|       2 | Sachin |    99000 |
+|       1 | Ram    |   650000 |
++---------+--------+----------+
 3 rows in set (0.00 sec)
-mysql> select accno,name,balance,balance*0.04*20 as interest from customer;
-+-------+--------+---------+----------+
-| accno | name | balance | interest |
-+-------+--------+---------+----------+
-| 1 | Ram | 10000 | 8000.00 |
-| 2 | Ravi | 25000 | 20000.00 |
-| 3 | Sachin | 30000 | 24000.00 |
-+-------+--------+---------+----------+
-3 rows in set (0.00 sec)
-mysql
+
+mysql> truncate table loan;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> select * from loan;
+Empty set (0.00 sec)
+
+mysql> drop table loan;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> alter table customer drop column city;
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from customer;
++-------+--------+---------+
+| accno | name   | balance |
++-------+--------+---------+
+|     1 | Ram    |   10000 |
+|     2 | Sachin |   20000 |
+|     3 | Ravi   |   45000 |
+|     4 | Sanvi  |   64000 |
++-------+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> alter table customer change name name_cust varchar(15);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from customer;
++-------+-----------+---------+
+| accno | name_cust | balance |
++-------+-----------+---------+
+|     1 | Ram       |   10000 |
+|     2 | Sachin    |   20000 |
+|     3 | Ravi      |   45000 |
+|     4 | Sanvi     |   64000 |
++-------+-----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> drop table loan;
+ERROR 1051 (42S02): Unknown table 'sanvi1211.loan'
+mysql> drop table customer;
+Query OK, 0 rows affected (0.03 sec)
