@@ -187,3 +187,66 @@ sanvi111> db.Student.aggregate([{$sort:{Rollno:1}}]);
     Marks: 70
   }
 ]
+
+
+sanvi111> db.Student.aggregate([ { $limit: 3 } ]);
+[
+  {
+    _id: ObjectId('672cc02a6bcd2dfba40d8192'),
+    Rollno: 1,
+    Name: 'Sanvi',
+    Branch: 'Computer',
+    Marks: 95
+  },
+  {
+    _id: ObjectId('672cc03d6bcd2dfba40d8193'),
+    Rollno: 2,
+    Name: 'Pradnesh',
+    Branch: 'Computer',
+    Marks: 85
+  },
+  {
+    _id: ObjectId('672cc0596bcd2dfba40d8194'),
+    Rollno: 3,
+    Name: 'Aradna',
+    Branch: 'AIML',
+    Marks: 90
+  }
+]
+sanvi111>
+
+
+sanvi111> db.Student.aggregate([
+...   {
+...     $project: {
+...       "Name": 1,
+...       "Rollno": 1}
+...   },
+...   {
+...     $limit: 5
+...   }
+... ]);
+[
+  {
+    _id: ObjectId('672cc02a6bcd2dfba40d8192'),
+    Rollno: 1,
+    Name: 'Sanvi'
+  },
+  {
+    _id: ObjectId('672cc03d6bcd2dfba40d8193'),
+    Rollno: 2,
+    Name: 'Pradnesh'
+  },
+  {
+    _id: ObjectId('672cc0596bcd2dfba40d8194'),
+    Rollno: 3,
+    Name: 'Aradna'
+  },
+  {
+    _id: ObjectId('672cc08c6bcd2dfba40d8196'),
+    Rollno: 5,
+    Name: 'Sana'
+  },
+  { _id: ObjectId('672cc0bb6bcd2dfba40d8198'), Rollno: 7, Name: 'Dev' }
+]
+sanvi111>
