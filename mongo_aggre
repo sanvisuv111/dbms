@@ -60,3 +60,130 @@ WriteResult({ "nInserted" : 1 })
 { "_id" : "IT", "Last_marks" : 75 }
 { "_id" : "Computer", "Last_marks" : 85 }
 >
+
+sanvi111> db.Student.createIndex({name:1})
+name_1
+sanvi111> db.Student.getIndexes();
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: 1 }, name: 'name_1' }
+]
+sanvi111> db.Student.createIndex({Name:1})
+Name_1
+sanvi111> db.Student.getIndexes();
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: 1 }, name: 'name_1' },
+  { v: 2, key: { Name: 1 }, name: 'Name_1' }
+]
+sanvi111> db.Student.dropIndex({name:1});
+{ nIndexesWas: 3, ok: 1 }
+sanvi111> db.Student.getIndexes();
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { Name: 1 }, name: 'Name_1' }
+]
+sanvi111> db.Student.aggregate([{$sort:{name:1}}]);
+[
+  {
+    _id: ObjectId('672cc02a6bcd2dfba40d8192'),
+    Rollno: 1,
+    Name: 'Sanvi',
+    Branch: 'Computer',
+    Marks: 95
+  },
+  {
+    _id: ObjectId('672cc03d6bcd2dfba40d8193'),
+    Rollno: 2,
+    Name: 'Pradnesh',
+    Branch: 'Computer',
+    Marks: 85
+  },
+  {
+    _id: ObjectId('672cc0596bcd2dfba40d8194'),
+    Rollno: 3,
+    Name: 'Aradna',
+    Branch: 'AIML',
+    Marks: 90
+  },
+  {
+    _id: ObjectId('672cc08c6bcd2dfba40d8196'),
+    Rollno: 5,
+    Name: 'Sana',
+    Branch: 'AIML',
+    Marks: 76
+  },
+  {
+    _id: ObjectId('672cc0bb6bcd2dfba40d8198'),
+    Rollno: 7,
+    Name: 'Dev',
+    Branch: 'Mechanical',
+    Marks: 70
+  },
+  {
+    _id: ObjectId('672cc9dc6bcd2dfba40d8199'),
+    Rollno: 4,
+    Name: 'Aryan',
+    Branch: 'ENTC',
+    Marks: 91
+  },
+  {
+    _id: ObjectId('672cc9fa6bcd2dfba40d819a'),
+    Rollno: 6,
+    Name: 'Anuja',
+    Branch: 'ENTC',
+    Marks: 89
+  }
+]
+sanvi111> db.Student.aggregate([{$sort:{Rollno:1}}]);
+[
+  {
+    _id: ObjectId('672cc02a6bcd2dfba40d8192'),
+    Rollno: 1,
+    Name: 'Sanvi',
+    Branch: 'Computer',
+    Marks: 95
+  },
+  {
+    _id: ObjectId('672cc03d6bcd2dfba40d8193'),
+    Rollno: 2,
+    Name: 'Pradnesh',
+    Branch: 'Computer',
+    Marks: 85
+  },
+  {
+    _id: ObjectId('672cc0596bcd2dfba40d8194'),
+    Rollno: 3,
+    Name: 'Aradna',
+    Branch: 'AIML',
+    Marks: 90
+  },
+  {
+    _id: ObjectId('672cc9dc6bcd2dfba40d8199'),
+    Rollno: 4,
+    Name: 'Aryan',
+    Branch: 'ENTC',
+    Marks: 91
+  },
+  {
+    _id: ObjectId('672cc08c6bcd2dfba40d8196'),
+    Rollno: 5,
+    Name: 'Sana',
+    Branch: 'AIML',
+    Marks: 76
+  },
+  {
+    _id: ObjectId('672cc9fa6bcd2dfba40d819a'),
+    Rollno: 6,
+    Name: 'Anuja',
+    Branch: 'ENTC',
+    Marks: 89
+  },
+  {
+    _id: ObjectId('672cc0bb6bcd2dfba40d8198'),
+    Rollno: 7,
+    Name: 'Dev',
+    Branch: 'Mechanical',
+    Marks: 70
+  }
+]
