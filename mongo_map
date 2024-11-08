@@ -1,66 +1,76 @@
-ASSIGNMENT NO:11
-/*PROBLEM STATEMENT:MongoDB – Map-reduces operations: Implement Map reduces operation with
-suitable example using MongoDB.*/
-gescoe@gescoe-OptiPlex-3010:~$ mongo
-MongoDB shell version: 2.6.12
-connecting to: test
-> use TEB_41;
-switched to db TEB_41
-> db.Record.insert({"Branch":"Computer","Marks":950,"Division":"B"});
+/////////////////////////////////////////////////////////sir
+
+
+ > db.Stud.insert({Rollno:1,Name:'Sanvi',Marks:80,Branch:'Computer'});
 WriteResult({ "nInserted" : 1 })
-> db.Record.insert({"Branch":"Computer","Marks":700,"Division":"B"});
+> db.Stud.insert({Rollno:2,Name:'Prads',Marks:90,Branch:'Computer'});
 WriteResult({ "nInserted" : 1 })
-> db.Record.insert({"Branch":"AIDS","Marks":820,"Division":"A"});
+> db.Stud.insert({Rollno:3,Name:'Ruchi',Marks:70,Branch:'IT'});
 WriteResult({ "nInserted" : 1 })
-> db.Record.insert({"Branch":"AIDS","Marks":650,"Division":"B"});
+> db.Stud.insert({Rollno:4,Name:'Devika',Marks:60,Branch:'IT'});
 WriteResult({ "nInserted" : 1 })
-> db.Record.find().pretty();
+> db.Stud.find().pretty();
 {
-"_id" : ObjectId("66f12b91e8870de812a53430"),
-"Branch" : "Computer",
-"Marks" : 950,
-"Division" : "B"
+    "_id" : ObjectId("66f3a2fdde2b979a90e30284"),
+    "Rollno" : 1,
+    "Name" : "Ram",
+    "Marks" : 80,
+    "Branch" : "Computer"
 }
 {
-"_id" : ObjectId("66f12bb4e8870de812a53431"),
-"Branch" : "Computer",
-"Marks" : 700,
-"Division" : "B"
+    "_id" : ObjectId("66f3a30cde2b979a90e30285"),
+    "Rollno" : 2,
+    "Name" : "Ravi",
+    "Marks" : 90,
+    "Branch" : "Computer"
 }
 {
-"_id" : ObjectId("66f12bcce8870de812a53432"),
-"Branch" : "AIDS",
-"Marks" : 820,
-"Division" : "A"
+    "_id" : ObjectId("66f3a323de2b979a90e30286"),
+    "Rollno" : 3,
+    "Name" : "Rahul",
+    "Marks" : 70,
+    "Branch" : "IT"
 }
 {
-"_id" : ObjectId("66f12be8e8870de812a53433"),
-"Branch" : "AIDS",
-"Marks" : 650,
-"Division" : "B"
+    "_id" : ObjectId("66f3a33fde2b979a90e30287"),
+    "Rollno" : 4,
+    "Name" : "Sachin",
+    "Marks" : 60,
+    "Branch" : "IT"
 }
-> db.Record.mapReduce(function(){emit(this.Branch, this.Marks);},
-... function(key, values) {return Array.sum( values)},
-... { query : {Division : "B"}, out : "Total_marks"
-... }
-... );
+> db.Stud.mapReduce(function(){emit(this.Branch,this.Marks);},function(key,values){ return Array.sum(values)},{query : {"Marks":{$gt:60}},out : "Total_Marks"} );
 {
-"result" : "Total_marks",
-"timeMillis" : 87,
-"counts" : {
-"input" : 3,
-"emit" : 3,
-"reduce" : 1,
-"output" : 2
-},
-"ok" : 1
+    "result" : "Total_Marks",
+    "timeMillis" : 77,
+    "counts" : {
+        "input" : 3,
+        "emit" : 3,
+        "reduce" : 1,
+        "output" : 2
+    },
+    "ok" : 1
 }
 > show collections;
-Record
-Student
-Total_marks
-System.indexes
-> db.Total_marks.find().pretty();
-{ "_id" : "AIDS", "value" : 650 }
-{ "_id" : "Computer", "value" : 1650 }
->
+Employee
+Stud
+Studentdata
+Total_Marks
+system.indexes
+> db.Total_Marks.find().pretty();
+{ "_id" : "Computer", "value" : 170 }
+{ "_id" : "IT", "value" : 70 }
+> db.Stud.mapReduce( function(){emit(this.Branch,this.Marks);}, function(key,values){ return Array.avg(values)}, {    query : {"Marks":{$gt:60}},    out : "Avg_Marks" } );
+{
+    "result" : "Avg_Marks",
+    "timeMillis" : 25,
+    "counts" : {
+        "input" : 3,
+        "emit" : 3,
+        "reduce" : 1,
+        "output" : 2
+    },
+    "ok" : 1
+}
+> db.Avg_Marks.find().pretty();
+{ "_id" : "Computer", "value" : 85 }
+{ "_id" : "IT", "value" : 70 }
