@@ -104,3 +104,286 @@ Sum,count(Branch) as Count from student group by Branch;
 | Data Scientist | 90 | 90 | 90.0000 | 90 | 1 | 
 + + -+ -+- -+- -+ -+ 
 3 rows in set (0.02 sec)
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+Enter password: *********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 9.1.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use sanvi1211;
+Database changed
+mysql> create table employee(id int primary key, name varchar(15), salary numeric(10),deptid numeric(5));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table department(deptid int primary key, name varchar(15));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc employee;
++--------+---------------+------+-----+---------+-------+
+| Field  | Type          | Null | Key | Default | Extra |
++--------+---------------+------+-----+---------+-------+
+| id     | int           | NO   | PRI | NULL    |       |
+| name   | varchar(15)   | YES  |     | NULL    |       |
+| salary | decimal(10,0) | YES  |     | NULL    |       |
+| deptid | decimal(5,0)  | YES  |     | NULL    |       |
++--------+---------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc department;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| deptid | int         | NO   | PRI | NULL    |       |
+| name   | varchar(15) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into employee values(1,"Sanvi",200000,111);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(2,"Savi",34000,222);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(3,"Devi",54000,111);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee values(4,"Arsh",76000,333);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(5,"Aish",706000,444);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into employee values(6,"Krish",76080,333);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into employee values(7,"Nishita",83080,555);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department values(111,"Computer");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department values(222,"IT");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department values(333,"AIDS");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department values(444,"AIML");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into department values(555,"Mechanical");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from department;
++--------+------------+
+| deptid | name       |
++--------+------------+
+|    111 | Computer   |
+|    222 | IT         |
+|    333 | AIDS       |
+|    444 | AIML       |
+|    555 | Mechanical |
++--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from employee;
++----+---------+--------+--------+
+| id | name    | salary | deptid |
++----+---------+--------+--------+
+|  1 | Sanvi   | 200000 |    111 |
+|  2 | Savi    |  34000 |    222 |
+|  3 | Devi    |  54000 |    111 |
+|  4 | Arsh    |  76000 |    333 |
+|  5 | Aish    | 706000 |    444 |
+|  6 | Krish   |  76080 |    333 |
+|  7 | Nishita |  83080 |    555 |
++----+---------+--------+--------+
+7 rows in set (0.00 sec)
+
+mysql> select e.name,d.name from employee e join department d on e.deptid=d.deptid;
++---------+------------+
+| name    | name       |
++---------+------------+
+| Sanvi   | Computer   |
+| Savi    | IT         |
+| Devi    | Computer   |
+| Arsh    | AIDS       |
+| Aish    | AIML       |
+| Krish   | AIDS       |
+| Nishita | Mechanical |
++---------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select e.name,d.name from employee e Left join department d on e.deptid=d.deptid;
++---------+------------+
+| name    | name       |
++---------+------------+
+| Sanvi   | Computer   |
+| Savi    | IT         |
+| Devi    | Computer   |
+| Arsh    | AIDS       |
+| Aish    | AIML       |
+| Krish   | AIDS       |
+| Nishita | Mechanical |
++---------+------------+
+7 rows in set (0.00 sec)
+
+mysql> insert into employee values(8,"Ishita",93080);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into employee values(8,"Ishita",93080,NU);
+ERROR 1054 (42S22): Unknown column 'NU' in 'field list'
+mysql> insert into employee values(8,"Ishita",93080,NULL);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select e.name,d.name from employee e Left join department d on e.deptid=d.deptid;
++---------+------------+
+| name    | name       |
++---------+------------+
+| Sanvi   | Computer   |
+| Savi    | IT         |
+| Devi    | Computer   |
+| Arsh    | AIDS       |
+| Aish    | AIML       |
+| Krish   | AIDS       |
+| Nishita | Mechanical |
+| Ishita  | NULL       |
++---------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select e.name,d.name from employee e right join de
+partment d on e.deptid=d.deptid;
++---------+------------+
+| name    | name       |
++---------+------------+
+| Devi    | Computer   |
+| Sanvi   | Computer   |
+| Savi    | IT         |
+| Krish   | AIDS       |
+| Arsh    | AIDS       |
+| Aish    | AIML       |
+| Nishita | Mechanical |
++---------+------------+
+7 rows in set (0.01 sec)
+
+mysql> insert into department values(666,"Electrical");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select e.name,d.name from employee e right join department d on e.deptid=d.deptid;
++---------+------------+
+| name    | name       |
++---------+------------+
+| Devi    | Computer   |
+| Sanvi   | Computer   |
+| Savi    | IT         |
+| Krish   | AIDS       |
+| Arsh    | AIDS       |
+| Aish    | AIML       |
+| Nishita | Mechanical |
+| NULL    | Electrical |
++---------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select e.name,d.name from employee e Left join department d on e.deptid=d.deptid;
++---------+------------+
+| name    | name       |
++---------+------------+
+| Sanvi   | Computer   |
+| Savi    | IT         |
+| Devi    | Computer   |
+| Arsh    | AIDS       |
+| Aish    | AIML       |
+| Krish   | AIDS       |
+| Nishita | Mechanical |
+| Ishita  | NULL       |
++---------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select e.name,d.name from employee e Left join department d on e.deptid=d.deptid union  select e.name,d.name from employee e right join department d on e.deptid=d.deptid;
++---------+------------+
+| name    | name       |
++---------+------------+
+| Sanvi   | Computer   |
+| Savi    | IT         |
+| Devi    | Computer   |
+| Arsh    | AIDS       |
+| Aish    | AIML       |
+| Krish   | AIDS       |
+| Nishita | Mechanical |
+| Ishita  | NULL       |
+| NULL    | Electrical |
++---------+------------+
+9 rows in set (0.00 sec)
+
+mysql> select avg(salary) from employee;
++-------------+
+| avg(salary) |
++-------------+
+| 165280.0000 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select * from customer where salary >  (select avg(salary) from employee);
+ERROR 1146 (42S02): Table 'sanvi1211.customer' doesn't exist
+mysql> select * from employee where salary >  (select avg(salary) from employee);
++----+-------+--------+--------+
+| id | name  | salary | deptid |
++----+-------+--------+--------+
+|  1 | Sanvi | 200000 |    111 |
+|  5 | Aish  | 706000 |    444 |
++----+-------+--------+--------+
+2 rows in set (0.01 sec)
+
+mysql> select max(salary) from employee;
++-------------+
+| max(salary) |
++-------------+
+|      706000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select name,max(salary) from employee;
+ERROR 1140 (42000): In aggregated query without GROUP BY, expression #1 of SELECT list contains nonaggregated column 'sanvi1211.employee.name'; this is incompatible with sql_mode=only_full_group_by
+mysql> select name,salary from employee;
++---------+--------+
+| name    | salary |
++---------+--------+
+| Sanvi   | 200000 |
+| Savi    |  34000 |
+| Devi    |  54000 |
+| Arsh    |  76000 |
+| Aish    | 706000 |
+| Krish   |  76080 |
+| Nishita |  83080 |
+| Ishita  |  93080 |
++---------+--------+
+8 rows in set (0.00 sec)
+
+mysql> select name from employee where salary=706000;
++------+
+| name |
++------+
+| Aish |
++------+
+1 row in set (0.00 sec)
+
+mysql> select name,deptid from employee where deptid in(select deptid from department);
++---------+--------+
+| name    | deptid |
++---------+--------+
+| Sanvi   |    111 |
+| Savi    |    222 |
+| Devi    |    111 |
+| Arsh    |    333 |
+| Aish    |    444 |
+| Krish   |    333 |
+| Nishita |    555 |
++---------+--------+
+7 rows in set (0.00 sec)
